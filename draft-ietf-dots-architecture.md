@@ -106,7 +106,6 @@ informative:
   RFC6763:
   RFC7092:
   RFC7094:
-  RFC8094:
 
 
 --- abstract
@@ -206,7 +205,7 @@ This document makes the following assumptions:
 * Mitigation requests may be sent to one or more upstream DOTS servers based on
   criteria determined by DOTS client administrators and the underlying network
   configuration. The number of DOTS servers with which a given DOTS client has
-  established signaling sessions is determined by local policy and is
+  established signal sessions is determined by local policy and is
   deployment-specific. For example, a DOTS client of a multi-homed network may
   support built-in policies to establish DOTS relationships with DOTS servers
   located upstream of each interconnection link.
@@ -292,7 +291,7 @@ DOTS server and the DOTS client.
 
 The DOTS client may be provided with a list of DOTS servers, each associated
 with one or more IP addresses. These addresses may or may not be of the same
-address family. The DOTS client establishes one or more signaling sessions by
+address family. The DOTS client establishes one or more signal channels by
 connecting to the provided DOTS server addresses.
 
 The primary purpose of the signal channel is for a DOTS client to ask a
@@ -441,11 +440,11 @@ The DOTS client adjusts mitigation scope and provides available attack details
 at the direction of its local administrator. Such direction may involve manual
 or automated adjustments in response to feedback from the DOTS server.
 
-To provide a metric of signal health and distinguish an idle signaling session
+To provide a metric of signal health and distinguish an idle signal channel
 from a disconnected or defunct session, the DOTS client sends a heartbeat over
-the signal channel to maintain its half of the signaling session. The DOTS
+the signal channel to maintain its half of the signal channel. The DOTS
 client similarly expects a heartbeat from the DOTS server, and may consider a
-signaling session terminated in the extended absence of a DOTS server heartbeat.
+signal channel terminated in the extended absence of a DOTS server heartbeat.
 
 
 ### DOTS Server {#dots-server}
@@ -453,13 +452,13 @@ signaling session terminated in the extended absence of a DOTS server heartbeat.
 A DOTS server is a DOTS agent capable of receiving, processing and possibly
 acting on requests for help coordinating attack response DOTS clients.  The DOTS
 server authenticates and authorizes DOTS clients as described in
-{{signaling-sessions}}, and maintains signaling session state, tracking requests
+{{signaling-sessions}}, and maintains signal channel state, tracking requests
 for mitigation, reporting on the status of active mitigations, and terminating
-signaling sessions in the extended absence of a client heartbeat or when a
+signal channels in the extended absence of a client heartbeat or when a
 session times out.
 
 Assuming the preconditions discussed below exist, a DOTS client maintaining an
-active signaling session with a DOTS server may reasonably expect some level of
+active signal channel with a DOTS server may reasonably expect some level of
 mitigation in response to a request for coordinated attack response.
 
 The DOTS server enforces authorization of DOTS clients' signals for mitigation.
@@ -488,11 +487,11 @@ The DOTS server SHOULD retrieve available metrics for any mitigations activated
 on behalf of a DOTS client, and SHOULD include them in server signals sent to
 the DOTS client originating the request for mitigation.
 
-To provide a metric of signal health and distinguish an idle signaling session
+To provide a metric of signal health and distinguish an idle signal channel
 from a disconnected or defunct session, the DOTS server MUST send a heartbeat
-over the signal channel to maintain its half of the signaling session. The DOTS
+over the signal channel to maintain its half of the signal channel. The DOTS
 server similarly expects a heartbeat from the DOTS client, and MAY consider a
-signaling session terminated in the extended absence of a DOTS client heartbeat.
+signal channel terminated in the extended absence of a DOTS client heartbeat.
 
 
 ### DOTS Gateway {#dots-gateway}
@@ -506,7 +505,7 @@ application.
 
 A DOTS gateway may be deployed client-side, server-side or both.  The gateway
 may terminate multiple discrete client connections and may aggregate these into
-a single or multiple DOTS signaling sessions.
+a one or more DOTS signal channels.
 
 The DOTS gateway will appear as a server to its downstream agents and as a
 client to its upstream agents, a functional concatenation of the DOTS client and
@@ -616,7 +615,7 @@ include:
 ### Gatewayed Signaling
 
 As discussed in {{dots-gateway}}, a DOTS gateway is a logical function chaining
-signaling sessions through concatenation of a DOTS server and DOTS client.
+signal channels through concatenation of a DOTS server and DOTS client.
 
 An example scenario, as shown in {{fig-client-gateway-agg}} and
 {{fig-client-gateway-noagg}}, is for an enterprise to have deployed multiple
@@ -724,8 +723,8 @@ considerations are out of scope for this document.
 An established communication layer between DOTS agents is a signaling session.
 At its most basic, for a DOTS signaling session to exist both signal channel and
 data channel must be functioning between DOTS agents. That is, under nominal
-network conditions, signals actively sent from a DOTS client are received by the
-specific DOTS server intended by the client, and vice versa.
+network conditions, messages actively sent from a DOTS client are received by
+the specific DOTS server intended by the client, and vice versa.
 
 
 ### Preconditions {#signaling-session-preconditions}
@@ -746,7 +745,7 @@ channel messaging.
 
 ### Establishing the Signaling Session {#establishing-signaling-session}
 
-With the required business agreements in place, the DOTS client
+With the required service agreements in place, the DOTS client
 initiates a signal session by contacting its DOTS server(s) over the signal
 channel and the data channel. To allow for DOTS service flexibility, neither the
 order of contact nor the time interval between channel creations is specified. A
@@ -811,8 +810,8 @@ architecture.
 
 ### Direct Signaling {#direct-signaling}
 
-A signaling session may take the form of direct signaling between the DOTS
-clients and servers, as shown in {{fig-direct-signaling}}.
+Signaling may take the form of direct signaling between the DOTS clients and
+servers, as shown in {{fig-direct-signaling}}.
 
 ~~~~~
         +-------------+                            +-------------+
@@ -821,11 +820,10 @@ clients and servers, as shown in {{fig-direct-signaling}}.
 ~~~~~
 {: #fig-direct-signaling title="Direct Signaling"}
 
-In a direct signaling session, DOTS client and server are communicating
-directly. A direct signaling session may exist inter- or intra-domain. The
-signaling session is abstracted from the underlying networks or network elements
-the signals traverse: in a direct signaling session, the DOTS client and server
-are logically adjacent.
+In direct signaling, DOTS client and server are communicating directly. Direct
+signaling may exist inter- or intra-domain. The signaling is abstracted from the
+underlying networks or network elements the signals traverse: in direct
+signaling, the DOTS client and server are logically adjacent.
 
 
 ### Redirected Signaling {#redirected-signaling}
@@ -834,7 +832,7 @@ In certain circumstances, a DOTS server may want to redirect a DOTS client to
 an alternative DOTS server for a signaling session. Such circumstances include
 but are not limited to:
 
-* Maximum number of signaling sessions with clients has been reached;
+* Maximum number of signal channels with clients has been reached;
 
 * Mitigation capacity exhaustion in the mitigator with which the
   specific DOTS server is communicating;
@@ -846,7 +844,7 @@ but are not limited to:
 * Scheduled modifications to the network path between DOTS server and DOTS
   client.
 
-A basic redirected signaling session resembles the following, as shown in
+A basic redirected signaling interaction is described in
 {{fig-redirected-signaling}}.
 
 ~~~~~
@@ -873,22 +871,22 @@ A basic redirected signaling session resembles the following, as shown in
 1. Previously established signaling session 1 exists between a DOTS client and
    DOTS server A.
 
-1. DOTS server A sends a server signal redirecting the client to DOTS server B.
+1. DOTS server A sends a message redirecting the client to DOTS server B.
 
 1. If the DOTS client does not already have a separate signaling session with
    the redirection target, the DOTS client initiates and establishes a signaling
    session with DOTS server B.
 
-1. Having redirected the DOTS client, DOTS server A ceases sending server
-   signals. The DOTS client likewise stops sending client signals to DOTS server
-   A. Signal session 1 is terminated.
+1. Having redirected the DOTS client, DOTS server A ceases sending messages.
+   The DOTS client likewise stops sending messages to DOTS server A. Signal
+   session 1 is terminated.
 
 
 ### Recursive Signaling {#recursive-signaling}
 
-DOTS is centered around improving the speed and efficiency of coordinated
-response to DDoS attacks. One scenario not yet discussed involves coordination
-among federated domains operating DOTS servers and mitigators.
+DOTS is focused on improving the speed and efficiency of coordinated response to
+DDoS attacks. One scenario not yet discussed involves coordination among
+cooperating domains operating DOTS servers and mitigators.
 
 In the course of normal DOTS operations, a DOTS client communicates the need for
 mitigation to a DOTS server, and that server initiates mitigation on a
@@ -923,7 +921,7 @@ building a cumulative mitigation against the attack.
                      example.net domain
                      . . . . . . . . . . . . . . . . .
                      .    Gn                         .
-       +----+    A   .  +----+       +-----------+   .
+       +----+    1   .  +----+       +-----------+   .
        | Cc |<--------->| Sn |~~~~~~~| Mitigator |   .
        +----+        .  +====+       |     Mn    |   .
                      .  | Cn |       +-----------+   .
@@ -931,7 +929,7 @@ building a cumulative mitigation against the attack.
         client       .    ^                          .
                      . . .|. . . . . . . . . . . . . .
                           |
-                        B |
+                        2 |
                           |
                      . . .|. . . . . . . . . . . . . .
                      .    v                          .
@@ -946,10 +944,10 @@ building a cumulative mitigation against the attack.
 {: #fig-recursive-signaling title="Recursive Signaling"}
 
 In {{fig-recursive-signaling}}, client Cc signals a request for mitigation
-across inter-domain signaling session A to the DOTS server Sn belonging to the
+across inter-domain signaling session 1 to the DOTS server Sn belonging to the
 example.net domain. DOTS server Sn enables mitigation on mitigator Mn. DOTS
 server Sn is half of DOTS gateway Gn, being deployed logically back-to-back with
-DOTS client Cn, which has pre-existing inter-domain signaling session B with the
+DOTS client Cn, which has pre-existing inter-domain signaling session 2 with the
 DOTS server So belonging to the example.org domain. At any point, DOTS server Sn
 MAY recurse an on-going mitigation request through DOTS client Cn to DOTS server
 So, in the expectation that mitigator Mo will be activated to aid in the defense
@@ -1017,19 +1015,19 @@ While the DOTS signal channel primarily operates over UDP per
 authentication between DOTS agents, with associated security state on both ends.
 
 Network instability is of particular concern with anycast signaling, as DOTS
-signaling sessions are expected to be long-lived, and potentially operating
+signal channels are expected to be long-lived, and potentially operating
 under congested network conditions caused by a volumetric DDoS attack.
 
 For example, a network configuration altering the route to the DOTS server
 during active anycast signaling may cause the DOTS client to send messages to a
 DOTS server other than the one with which it initially established a signaling
 session. That second DOTS server may not have the security state of the
-existing session, forcing the DOTS client to initialize a new signaling session.
+existing session, forcing the DOTS client to initialize a new signal channels.
 This challenge may in part be mitigated by use of pre-shared keys, as described
 in [I-D.ietf-tls-tls13], but keying material must be available to all DOTS
 servers sharing the anycast Service Address in that case.
 
-While the DOTS client will try to establish a new signaling session with the
+While the DOTS client will try to establish a new signal channel with the
 DOTS server now acting as the anycast DOTS Service Address, the link between
 DOTS client and server may be congested with attack traffic, making signal
 session establishment difficult. In such a scenario, anycast Service Address
@@ -1037,12 +1035,12 @@ instability becomes a sort of signal session flapping, with obvious negative
 consequences for the DOTS deployment.
 
 Anycast signaling deployments similarly must also take into account active
-mitigations. Active mitigations initiated through a signaling session may
-involve diverting traffic to a scrubbing center. If the signaling session flaps
+mitigations. Active mitigations initiated through a signal channel may
+involve diverting traffic to a scrubbing center. If the signal channel flaps
 due to anycast changes as described above, mitigation may also flap as the DOTS
-servers sharing the anycast DOTS service address toggles mitigation on detecting
-signaling session loss, depending on whether the client has configured
-mitigation on loss of signal.
+servers sharing the anycast DOTS service address toggle mitigation on detecting
+signal channel loss, depending on whether the client has configured mitigation
+on loss of signal.
 
 
 Triggering Requests for Mitigation {#mit-request-triggers}
@@ -1151,16 +1149,16 @@ DOTS client are implementation-specific.
 
 ### Automated Mitigation on Loss of Signal {#auto-mit-signal-loss}
 
-To maintain a signaling session, the DOTS client and the DOTS server exchange
-regular but infrequent messages across the signaling channel. In the absence of
-an attack, the probability of message loss in the signaling channel should be
+To maintain a signal channel, the DOTS client and the DOTS server exchange
+regular but infrequent messages across the signal channel. In the absence of
+an attack, the probability of message loss in the signal channel should be
 extremely low. Under attack conditions, however, some signal loss may be
 anticipated as attack traffic congests the link, depending on the attack type.
 
 While [I-D.ietf-dots-requirements] specifies the DOTS protocol be robust when
 signaling under attack conditions, there are nevertheless scenarios in which the
 DOTS signal is lost in spite of protocol best efforts. To handle such scenarios,
-a DOTS client operator may configure the signaling session to trigger mitigation
+a DOTS client operator may configure the signal channel to trigger mitigation
 when the DOTS server ceases receiving DOTS client signals (or vice versa) beyond
 the miss count or period permitted by the protocol.
 
