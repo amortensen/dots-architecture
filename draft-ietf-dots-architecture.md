@@ -205,7 +205,7 @@ This document makes the following assumptions:
 * Mitigation requests may be sent to one or more upstream DOTS servers based on
   criteria determined by DOTS client administrators and the underlying network
   configuration. The number of DOTS servers with which a given DOTS client has
-  established signal sessions is determined by local policy and is
+  established signal channels is determined by local policy and is
   deployment-specific. For example, a DOTS client of a multi-homed network may
   support built-in policies to establish DOTS relationships with DOTS servers
   located upstream of each interconnection link.
